@@ -1,0 +1,24 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: core-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ortodoxmd_db?currentSchema=core_schema
+    username: postgres
+    password:   # Pass-ul tău
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # Auto-creează/modifică tabele din entities (pentru dev)
+    show-sql: true  # Logs SQL pentru debugging
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect  # Pentru compatibilitate PostgreSQL
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+logging:
+  level:
+    org.hibernate.SQL: debug  # Mai multe logs pentru QA
+    org.springframework: INFO
