@@ -1,24 +1,44 @@
-server:
-  port: 8080
 spring:
-  application:
-    name: core-service
+  profiles:
+    active: dev  # Default: H2; schimbă la prod pentru Postgres
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/ortodoxmd_db?currentSchema=core_schema
+    url: jdbc:h2:mem:ortodoxmd_db;DB_CLOSE_DELAY=-1  # In-memory
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # Pentru dev: recreează la fiecare run
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ortodoxmd_db
     username: postgres
-    password:   # Pass-ul tău
+    password: 
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update  # Auto-creează/modifică tabele din entities (pentru dev)
-    show-sql: true  # Logs SQL pentru debugging
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect  # Pentru compatibilitate PostgreSQL
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-logging:
-  level:
-    org.hibernate.SQL: debug  # Mai multe logs pentru QA
-    org.springframework: INFO
+      ddl-auto: validate  # Pentru prod: validează schema, nu modifică
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+grok:
+  api:
+    url: https://api.x.ai/v1/chat/completions  # Dacă ai setat
+    key: your-grok-api-key-here
