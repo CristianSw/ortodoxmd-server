@@ -8,17 +8,19 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    url: jdbc:h2:mem:ortodoxmd_db;DB_CLOSE_DELAY=-1  # In-memory
+    url: jdbc:h2:mem:ortodoxmd_db;DB_CLOSE_DELAY=-1  # In-memory pentru dev rapid
     username: sa
     password: 
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop  # Pentru dev: recreează la fiecare run
+      ddl-auto: create-drop  # Recrează la fiecare run în dev (compatibil Flyway)
     show-sql: true
   flyway:
-    enabled: true
-    locations: classpath:db/migration
+    enabled: true  # Activează Flyway
+    locations: classpath:db/migration  # Locație standard pentru script-uri
+    baseline-on-migrate: true  # Dacă DB existent, baseline la V1
+    schemas: core_schema  # Schema țintă (compatibil H2/Postgres)
 
 ---
 spring:
@@ -28,17 +30,14 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ortodoxmd_db
     username: postgres
-    password: 
+    password: yourpassword
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: validate  # Pentru prod: validează schema, nu modifică
+      ddl-auto: validate  # Validează schema în prod (nu modifică)
     show-sql: true
   flyway:
-    enabled: true
+    enabled: true  # Activează Flyway
     locations: classpath:db/migration
-
-grok:
-  api:
-    url: https://api.x.ai/v1/chat/completions  # Dacă ai setat
-    key: your-grok-api-key-here
+    baseline-on-migrate: true
+    schemas: core_schema  # Asigură migrări în schema corectă
