@@ -1,7 +1,7 @@
-package com.example.core.controller;
+package com.ortodoxmd.core.controller;
 
-import com.example.core.entity.CalendarDay;
-import com.example.core.service.CalendarService;
+import com.ortodoxmd.core.entity.CalendarDay;
+import com.ortodoxmd.core.services.CalendarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +17,10 @@ public class CalendarController {
     }
 
     @PostMapping("/populate")
-    public String populate(@RequestParam int startYear, @RequestParam int startMonth,
-                           @RequestParam int endYear, @RequestParam int endMonth) {
+    public String populate(@RequestParam(name = "startYear") int startYear,
+                           @RequestParam(name = "startMonth") int startMonth,
+                           @RequestParam(name = "endYear") int endYear,
+                           @RequestParam(name = "endMonth") int endMonth) {
         service.populateForPeriod(startYear, startMonth, endYear, endMonth);
         return "Populate completed";
     }

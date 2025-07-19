@@ -8,18 +8,18 @@ CREATE TABLE core_schema.calendar_days (
     fasting_description_en TEXT,
     fasting_description_ro TEXT,
     fasting_description_ru TEXT,
-    other_commemorations_en TEXT,
-    other_commemorations_ro TEXT,
-    other_commemorations_ru TEXT
+    summary_title_en TEXT,
+    summary_title_ro TEXT,
+    summary_title_ru TEXT,
+    titles_en TEXT,
+    titles_ro TEXT,
+    titles_ru TEXT
 );
 
 CREATE TABLE core_schema.saints (
     id SERIAL PRIMARY KEY,
-    name_en VARCHAR(255) NOT NULL,
-    name_ro VARCHAR(255),
-    name_ru VARCHAR(255),
-    description_en TEXT,
-    description_ro TEXT,
-    description_ru TEXT,
+    name_and_description_en TEXT NOT NULL,
+    name_and_description_ro TEXT,
+    name_and_description_ru TEXT,
     calendar_day_date VARCHAR(10) REFERENCES core_schema.calendar_days(date)
 );

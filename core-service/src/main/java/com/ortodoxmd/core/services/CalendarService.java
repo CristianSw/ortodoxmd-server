@@ -1,19 +1,25 @@
-package com.example.core.service;
+package com.ortodoxmd.core.services;
 
-import com.example.core.entity.CalendarDay;
-import com.example.core.entity.Saint;
-import com.example.core.repository.CalendarDayRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ortodoxmd.core.entity.CalendarDay;
+import com.ortodoxmd.core.entity.Saint;
+import com.ortodoxmd.core.repository.CalendarDayRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CalendarService {
@@ -51,7 +57,7 @@ public class CalendarService {
 
                         CalendarDay dayEntity = repository.findById(dateStr).orElse(new CalendarDay());
                         dayEntity.setDate(dateStr);
-                        dayEntity.setIsFastingDay(json.path("fast_level").asInt() > 0);
+                        dayEntity.setFastingDay(json.path("fast_level").asInt() > 0);
                         dayEntity.setFastingType(mapFastingType(json.path("fast_level").asText()));
 
                         String fastingDescEn = json.path("fast_level_desc").asText();
@@ -59,33 +65,50 @@ public class CalendarService {
                         dayEntity.setFastingDescriptionRo(enableTranslation ? translateText(fastingDescEn, "Romanian") : fastingDescEn);
                         dayEntity.setFastingDescriptionRu(enableTranslation ? translateText(fastingDescEn, "Russian") : fastingDescEn);
 
-                        String otherEn = json.path("readings").asText();  // Ajustează dacă field diferă
-                        dayEntity.setOtherCommemorationsEn(otherEn);
-                        dayEntity.setOtherCommemorationsRo(enableTranslation ? translateText(otherEn, "Romanian") : otherEn);
-                        dayEntity.setOtherCommemorationsRu(enableTranslation ? translateText(otherEn, "Russian") : otherEn);
+                        // New: summary_title
+                        String summaryTitleEn = json.path("summary_title").asText();
+                        dayEntity.setSummaryTitleEn(summaryTitleEn);
+                        dayEntity.setSummaryTitleRo(enableTranslation ? translateText(summaryTitleEn, "Romanian") : summaryTitleEn);
+                        dayEntity.setSummaryTitleRu(enableTranslation ? translateText(summaryTitleEn, "Russian") : summaryTitleEn);
+
+                        // New: titles (join array)
+                        JsonNode titlesNode = json.path("titles");
+                        String titlesEn = "";
+                        if (titlesNode.isArray()) {
+                            List<String> titleList = new ArrayList<>();
+                            for (JsonNode node : titlesNode) {
+                                titleList.add(node.asText());
+                            }
+                            titlesEn = String.join(", ", titleList);
+                        } else {
+                            titlesEn = titlesNode.asText();
+                        }
+                        dayEntity.setTitlesEn(titlesEn);
+                        dayEntity.setTitlesRo(enableTranslation ? translateText(titlesEn, "Romanian") : titlesEn);
+                        dayEntity.setTitlesRu(enableTranslation ? translateText(titlesEn, "Russian") : titlesEn);
 
                         List<Saint> saints = new ArrayList<>();
-                        JsonNode commems = json.path("commemorations");
-                        for (JsonNode commem : commems) {
-                            Saint saint = new Saint();
-                            String nameEn = commem.path("title").asText();
-                            String descEn = commem.path("description").asText();
+                        JsonNode saintsNode = json.path("saints");
+                        if (saintsNode.isArray() && saintsNode.size() > 0) {
+                            for (JsonNode saintJson : saintsNode) {
+                                Saint saint = new Saint();
+                                String nameAndDescEn = saintJson.asText();  // Entire string as name_and_description
 
-                            saint.setNameEn(nameEn);
-                            saint.setNameRo(enableTranslation ? translateText(nameEn, "Romanian") : nameEn);
-                            saint.setNameRu(enableTranslation ? translateText(nameEn, "Russian") : nameEn);
+                                saint.setNameAndDescriptionEn(nameAndDescEn);
+                                saint.setNameAndDescriptionRo(enableTranslation ? translateText(nameAndDescEn, "Romanian") : nameAndDescEn);
+                                saint.setNameAndDescriptionRu(enableTranslation ? translateText(nameAndDescEn, "Russian") : nameAndDescEn);
 
-                            saint.setDescriptionEn(descEn);
-                            saint.setDescriptionRo(enableTranslation ? translateText(descEn, "Romanian") : descEn);
-                            saint.setDescriptionRu(enableTranslation ? translateText(descEn, "Russian") : descEn);
-
-                            saint.setCalendarDay(dayEntity);
-                            saints.add(saint);
+                                saint.setCalendarDay(dayEntity);
+                                saints.add(saint);
+                                logger.debug("Added Saint: {} for date {}", nameAndDescEn, dateStr);
+                            }
+                        } else {
+                            logger.info("No saints found for date {}", dateStr);
                         }
                         dayEntity.setSaints(saints);
 
                         repository.save(dayEntity);
-                        logger.info("Populated data for {}", dateStr);
+                        logger.info("Populated data for {} with {} saints", dateStr, saints.size());
                     } catch (Exception e) {
                         logger.error("Error populating day {}-{}-{}: {}", year, month, day, e.getMessage());
                     }
@@ -95,7 +118,6 @@ public class CalendarService {
     }
 
     private String translateText(String text, String targetLang) {
-        // ... codul de traducere neschimbat, dar nu se apelează acum
         if (text == null || text.isEmpty()) return "";
 
         try {
@@ -106,8 +128,8 @@ public class CalendarService {
             Map<String, Object> body = new HashMap<>();
             body.put("model", "grok-4");
             body.put("messages", List.of(
-                Map.of("role", "system", "content", "You are a translator."),
-                Map.of("role", "user", "content", "Translate the following text to " + targetLang + ": " + text)
+                    Map.of("role", "system", "content", "You are a translator."),
+                    Map.of("role", "user", "content", "Translate the following text to " + targetLang + ": " + text)
             ));
 
             HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
@@ -138,27 +160,21 @@ public class CalendarService {
 
         switch (effectiveLang) {
             case "en" -> {
-                day.setFastingDescription(day.getFastingDescriptionEn());
-                day.setOtherCommemorations(day.getOtherCommemorationsEn());
+                day.setFastingDescriptionEn(day.getFastingDescriptionEn());
                 day.getSaints().forEach(s -> {
-                    s.setName(s.getNameEn());
-                    s.setDescription(s.getDescriptionEn());
+                    s.setNameAndDescriptionEn(s.getNameAndDescriptionEn());
                 });
             }
             case "ro" -> {
-                day.setFastingDescription(day.getFastingDescriptionRo());
-                day.setOtherCommemorations(day.getOtherCommemorationsRo());
+                day.setFastingDescriptionRo(day.getFastingDescriptionRo());
                 day.getSaints().forEach(s -> {
-                    s.setName(s.getNameRo());
-                    s.setDescription(s.getDescriptionRo());
+                    s.setNameAndDescriptionRo(s.getNameAndDescriptionRo());
                 });
             }
             case "ru" -> {
-                day.setFastingDescription(day.getFastingDescriptionRu());
-                day.setOtherCommemorations(day.getOtherCommemorationsRu());
+                day.setFastingDescriptionRu(day.getFastingDescriptionRu());
                 day.getSaints().forEach(s -> {
-                    s.setName(s.getNameRu());
-                    s.setDescription(s.getDescriptionRu());
+                    s.setNameAndDescriptionRu(s.getNameAndDescriptionRu());
                 });
             }
             default -> throw new IllegalArgumentException("Unsupported lang: " + lang);

@@ -2,6 +2,10 @@ spring:
   profiles:
     active: dev  # Default: H2; schimbă la prod pentru Postgres
 
+grok:
+  api:
+    url: https://api.x.ai/v1/chat/completions  # Endpoint standard; confirmă în docs xAI API
+    key: dummy-key  # Placeholder; nu e folosit acum, dar previne erori
 ---
 spring:
   config:
@@ -21,6 +25,10 @@ spring:
     locations: classpath:db/migration  # Locație standard pentru script-uri
     baseline-on-migrate: true  # Dacă DB existent, baseline la V1
     schemas: core_schema  # Schema țintă (compatibil H2/Postgres)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
 ---
 spring:
@@ -41,3 +49,4 @@ spring:
     locations: classpath:db/migration
     baseline-on-migrate: true
     schemas: core_schema  # Asigură migrări în schema corectă
+
