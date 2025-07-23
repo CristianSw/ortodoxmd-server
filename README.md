@@ -20,7 +20,7 @@ Referințe cheie:
 Dependințe: Java 17, Maven, Docker (opțional).
 
 ## Checklist Features (Server-Side)
-- [ ] **Core-Service: Calendar Ortodox** - API pentru listă sărbători, fetch după dată (JSON).
+- [x] **Core-Service: Calendar Ortodox** - API pentru listă sărbători, fetch după dată (JSON).
 - [ ] **Core-Service: Rugăciuni Ortodoxe** - API pentru categorii și text rugăciuni.
 - [ ] **Core-Service: Biblie** - API pentru capitole/versete structurate (Vechi/Nou Testament).
 - [ ] **Core-Service: Vieți Sfinți** - API pentru biografii și imagini metadata.
