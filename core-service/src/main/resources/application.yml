@@ -18,13 +18,17 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop  # Recrează la fiecare run în dev (compatibil Flyway)
+      ddl-auto: none
     show-sql: true
   flyway:
     enabled: true  # Activează Flyway
     locations: classpath:db/migration  # Locație standard pentru script-uri
     baseline-on-migrate: true  # Dacă DB existent, baseline la V1
     schemas: core_schema  # Schema țintă (compatibil H2/Postgres)
+#    logging:
+#      level:
+#        org:
+#          flywaydb=DEBUG:
   h2:
     console:
       enabled: true
