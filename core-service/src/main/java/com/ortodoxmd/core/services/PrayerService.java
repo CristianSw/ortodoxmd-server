@@ -18,10 +18,7 @@ public class PrayerService {
 
     @Cacheable("prayers")
     public List<Prayer> getPrayers(PrayerCategory category, String search) {
-        if (search == null) {
-            search = "";
-        }
-        Sort sort = Sort.by(Sort.Direction.ASC, "orderIndex");  // Sortează pe orderIndex ascending
+        Sort sort = Sort.by(Sort.Direction.ASC, "orderIndex");
         return repository.findRootPrayersByCategoryOrSearch(category, search, sort);
     }
 }

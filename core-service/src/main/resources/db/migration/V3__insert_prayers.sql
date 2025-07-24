@@ -418,10 +418,10 @@ VALUES (
 -- Ajustează parent_id după ID-uri reale din DB (verifica în H2 Console după run inițial).
 -- Order_index secvențial per categorie.
 
-
-
-
-
+--
+--
+--
+--
 -- Categorie EVENING - Principal
 INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
 VALUES (
@@ -447,7 +447,7 @@ VALUES (
     'Пример текста на русском для вечерней молитвы.',
     'EVENING',
     1,
-    2  -- Ajustează după insert (ex: 2 dacă după MORNING)
+    20  -- Ajustează după insert (ex: 2 dacă după MORNING)
 );
 
 INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
@@ -460,90 +460,90 @@ VALUES (
     'Еще один пример текста на русском.',
     'EVENING',
     2,
-    2
+    20
 );
-
--- Categorie FOR_ILLNESS - Principal
-INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
-VALUES (
-    'Prayers for Illness',
-    'Rugăciuni pentru Boală',
-    'Молитвы при болезни',
-    '',
-    '',
-    '',
-    'FOR_ILLNESS',
-    0,
-    NULL
-);
-
--- Sub-rugăciuni FOR_ILLNESS (sample-uri simple)
-INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
-VALUES (
-    'Sample Illness Sub-Prayer 1',
-    'Rugăciune pentru Boală Exemplu 1',
-    'Молитва при болезни Пример 1',
-    'Sample English text for illness prayer.',
-    'Text sample în română pentru rugăciune pentru boală.',
-    'Пример текста на русском для молитвы при болезни.',
-    'FOR_ILLNESS',
-    1,
-    3  -- Ajustează (ex: 3)
-);
-
-INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
-VALUES (
-    'Sample Illness Sub-Prayer 2',
-    'Rugăciune pentru Boală Exemplu 2',
-    'Молитва при болезни Пример 2',
-    'Another sample English text.',
-    'Alt text sample în română.',
-    'Еще один пример текста на русском.',
-    'FOR_ILLNESS',
-    2,
-    3
-);
-
--- Categorie GENERAL - Principal
-INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
-VALUES (
-    'General Prayers',
-    'Rugăciuni Generale',
-    'Общие молитвы',
-    '',
-    '',
-    '',
-    'GENERAL',
-    0,
-    NULL
-);
-
--- Sub-rugăciuni GENERAL (sample-uri simple)
-INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
-VALUES (
-    'Sample General Sub-Prayer 1',
-    'Rugăciune Generală Exemplu 1',
-    'Общая молитва Пример 1',
-    'Sample English text for general prayer.',
-    'Text sample în română pentru rugăciune generală.',
-    'Пример текста на русском для общей молитвы.',
-    'GENERAL',
-    1,
-    4  -- Ajustează (ex: 4)
-);
-
-INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
-VALUES (
-    'Sample General Sub-Prayer 2',
-    'Rugăciune Generală Exemplu 2',
-    'Общая молитва Пример 2',
-    'Another sample English text.',
-    'Alt text sample în română.',
-    'Еще один пример текста на русском.',
-    'GENERAL',
-    2,
-    4
-);
-
--- Note: După run inițial, verifică ID-uri în H2 Console și ajustează parent_id pentru sub-rugăciuni. După ajustare, re-run pentru a popula corect.
--- Completează cu rugăciuni reale.
+--
+---- Categorie FOR_ILLNESS - Principal
+--INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+--VALUES (
+--    'Prayers for Illness',
+--    'Rugăciuni pentru Boală',
+--    'Молитвы при болезни',
+--    '',
+--    '',
+--    '',
+--    'FOR_ILLNESS',
+--    0,
+--    NULL
+--);
+--
+---- Sub-rugăciuni FOR_ILLNESS (sample-uri simple)
+--INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+--VALUES (
+--    'Sample Illness Sub-Prayer 1',
+--    'Rugăciune pentru Boală Exemplu 1',
+--    'Молитва при болезни Пример 1',
+--    'Sample English text for illness prayer.',
+--    'Text sample în română pentru rugăciune pentru boală.',
+--    'Пример текста на русском для молитвы при болезни.',
+--    'FOR_ILLNESS',
+--    1,
+--    3  -- Ajustează (ex: 3)
+--);
+--
+--INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+--VALUES (
+--    'Sample Illness Sub-Prayer 2',
+--    'Rugăciune pentru Boală Exemplu 2',
+--    'Молитва при болезни Пример 2',
+--    'Another sample English text.',
+--    'Alt text sample în română.',
+--    'Еще один пример текста на русском.',
+--    'FOR_ILLNESS',
+--    2,
+--    3
+--);
+--
+---- Categorie GENERAL - Principal
+--INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+--VALUES (
+--    'General Prayers',
+--    'Rugăciuni Generale',
+--    'Общие молитвы',
+--    '',
+--    '',
+--    '',
+--    'GENERAL',
+--    0,
+--    NULL
+--);
+--
+---- Sub-rugăciuni GENERAL (sample-uri simple)
+--INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+--VALUES (
+--    'Sample General Sub-Prayer 1',
+--    'Rugăciune Generală Exemplu 1',
+--    'Общая молитва Пример 1',
+--    'Sample English text for general prayer.',
+--    'Text sample în română pentru rugăciune generală.',
+--    'Пример текста на русском для общей молитвы.',
+--    'GENERAL',
+--    1,
+--    4  -- Ajustează (ex: 4)
+--);
+--
+--INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+--VALUES (
+--    'Sample General Sub-Prayer 2',
+--    'Rugăciune Generală Exemplu 2',
+--    'Общая молитва Пример 2',
+--    'Another sample English text.',
+--    'Alt text sample în română.',
+--    'Еще один пример текста на русском.',
+--    'GENERAL',
+--    2,
+--    4
+--);
+--
+---- Note: După run inițial, verifică ID-uri în H2 Console și ajustează parent_id pentru sub-rugăciuni. După ajustare, re-run pentru a popula corect.
+---- Completează cu rugăciuni reale.
