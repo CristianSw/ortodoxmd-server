@@ -1,5 +1,6 @@
 package com.ortodoxmd.core.controller;
 
+import com.ortodoxmd.core.dto.BibleBookFullDto;
 import com.ortodoxmd.core.entity.BibleBook;
 import com.ortodoxmd.core.entity.BibleChapter;
 import com.ortodoxmd.core.entity.BibleVerse;
@@ -34,5 +35,9 @@ public class BibleController {
             return List.of(); // Return empty list if chapter not found
         }
         return service.getVerses(chapterId);
+    }
+    @GetMapping("/all")
+    public List<BibleBookFullDto> getEntireBible() {
+        return service.getEntireBible();
     }
 }

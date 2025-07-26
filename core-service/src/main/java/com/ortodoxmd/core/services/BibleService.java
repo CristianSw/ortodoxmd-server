@@ -1,5 +1,7 @@
 package com.ortodoxmd.core.services;
 
+import com.ortodoxmd.core.dto.BibleBookFullDto;
+import com.ortodoxmd.core.dto.BibleChapterFullDto;
 import com.ortodoxmd.core.entity.BibleBook;
 import com.ortodoxmd.core.entity.BibleChapter;
 import com.ortodoxmd.core.entity.BibleVerse;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,5 +50,43 @@ public class BibleService {
         return chapterRepository.findByBookIdAndChapterNumber(bookId, chapterNumber)
                 .map(BibleChapter::getId)
                 .orElse(null);  // Return null if not found
+    }
+
+    @Cacheable("bibleAll")
+    public List<BibleBookFullDto> getEntireBible() {
+        List<BibleBookFullDto> bible = new ArrayList<>();
+
+        List<BibleBook> books = bookRepository.findAll();
+        for (BibleBook book : books) {
+            BibleBookFullDto bookDto = new BibleBookFullDto(
+                    book.getId(),
+                    book.getNameRo(),
+                    book.getNameEn(),
+                    book.getNameRu(),
+                    book.getTestament().getId(),
+                    new ArrayList<>()
+            );
+
+            List<BibleChapter> chapters = chapterRepository.findByBookId(book.getId());
+            for (BibleChapter chapter : chapters) {
+                BibleChapterFullDto chapterDto = new BibleChapterFullDto(
+                        chapter.getChapterNumber(),
+                        new ArrayList<>()
+                );
+
+                List<BibleVerse> verses = verseRepository.findByChapterId(chapter.getId());
+                for (BibleVerse verse : verses) {
+                    verse.setBookId(book.getId());  // Set bookId
+                    verse.setChapterNumber(chapter.getChapterNumber());  // Set chapterNumber
+                    chapterDto.getVerses().add(verse);
+                }
+
+                bookDto.getChapters().add(chapterDto);
+            }
+
+            bible.add(bookDto);
+        }
+
+        return bible;
     }
 }

@@ -3,7 +3,6 @@ package com.ortodoxmd.core.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Objects;
 
@@ -31,8 +30,16 @@ public class BibleVerse {
 
     @ManyToOne
     @JoinColumn(name = "chapter_id")
-    @JsonIgnore  // Fix: Ignoră chapter pentru a evita circular reference
     private BibleChapter chapter;
+
+    // Transient fields for DTO
+    @Transient
+    private Long bookId;
+
+    @Transient
+    private int chapterNumber;
+
+
 
     @Override
     public final boolean equals(Object o) {
