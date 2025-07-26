@@ -1,16 +1,5 @@
 
-INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
-VALUES (
-    'Morning Prayers',
-    'Rugăciuni de Dimineață',
-    'Утренние молитвы',
-    '',
-    '',
-    '',
-    'MORNING',
-    0,
-    NULL
-);
+
 
 
 INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
@@ -412,138 +401,395 @@ VALUES (
     1  -- Ajustează cu ID-ul real al categoriei principale "Rugăciuni de Dimineață" după insert
 );
 
--- V3__insert_sample_prayers.sql
--- Insert-uri sample pentru toate categoriile, cu ierarhie simplă.
--- Principal focus pe MORNING (cum ai completat), dar adaug sample-uri pentru EVENING, FOR_ILLNESS, GENERAL.
--- Ajustează parent_id după ID-uri reale din DB (verifica în H2 Console după run inițial).
--- Order_index secvențial per categorie.
 
---
---
---
---
--- Categorie EVENING - Principal
+-- Insert sub-rugăciune pentru Seară: Prima rugăciune (order_index = 1, parent_id = 2 pentru categoria EVENING)
+
 INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
 VALUES (
-    'Evening Prayers',
-    'Rugăciuni de Seară',
-    'Вечерние молитвы',
-    '',
-    '',
-    '',
-    'EVENING',
-    0,
-    NULL
-);
-
--- Sub-rugăciuni EVENING (sample-uri simple)
-INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
-VALUES (
-    'Sample Evening Sub-Prayer 1',
-    'Rugăciune de Seară Exemplu 1',
-    'Вечерняя молитва Пример 1',
-    'Sample English text for evening prayer.',
-    'Text sample în română pentru rugăciune de seară.',
-    'Пример текста на русском для вечерней молитвы.',
+    'First Evening Prayer',
+    'Prima rugăciune de seară',
+    'Первая вечерняя молитва',
+    '',  -- Text engleză gol
+    'Slavă Ție, Dumnezeul nostru, slavă Ție.' || '\n' ||
+    'Împărate ceresc, Mângâieto­rule, Duhul adevărului, Care pretutindenea ești și toate le îm­plinești,' || '\n' ||
+    'Vistierul bunătăților și dătătorule de viață, vino și Te sălășluiește întru noi,' || '\n' ||
+    'și ne curățește pe noi de toată întinăciunea și mântuiește, Bunule, sufletele noastre.' || '\n\n' ||
+    'Sfinte Dumnezeule, Sfinte tare, Sfinte fără de moarte, miluiește-ne pe noi (de trei ori).' || '\n\n' ||
+    'Slavă Tatălui și Fiului și Sfântului Duh și acum și pururea și în vecii vecilor. Amin.',  -- Text română complet
+    '',  -- Text rusă gol
     'EVENING',
     1,
-    20  -- Ajustează după insert (ex: 2 dacă după MORNING)
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
 );
+
+
+-- Insert sub-rugăciune pentru Seară: A doua rugăciune (order_index = 2, parent_id = 2 pentru categoria EVENING)
 
 INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
 VALUES (
-    'Sample Evening Sub-Prayer 2',
-    'Rugăciune de Seară Exemplu 2',
-    'Вечерняя молитва Пример 2',
-    'Another sample English text.',
-    'Alt text sample în română.',
-    'Еще один пример текста на русском.',
+    'Second Evening Prayer',
+    'A doua rugăciune de seară',
+    'Вторая вечерняя молитва',
+    '',  -- Text engleză gol
+    'Preasfântă Treime, miluiește-ne pe noi. Doam­ne, curățește păcatele noastre. Stăpâne, iartă fărădelegile noastre.' || '\n' ||
+    'Sfinte, cercetează și vin­decă neputințele noas­tre, pentru numele Tău.' || '\n\n' ||
+    'Doamne miluiește (de trei ori), Slavă..., și acum...',  -- Text română complet
+    '',  -- Text rusă gol
     'EVENING',
     2,
-    20
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
 );
---
----- Categorie FOR_ILLNESS - Principal
---INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
---VALUES (
---    'Prayers for Illness',
---    'Rugăciuni pentru Boală',
---    'Молитвы при болезни',
---    '',
---    '',
---    '',
---    'FOR_ILLNESS',
---    0,
---    NULL
---);
---
----- Sub-rugăciuni FOR_ILLNESS (sample-uri simple)
---INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
---VALUES (
---    'Sample Illness Sub-Prayer 1',
---    'Rugăciune pentru Boală Exemplu 1',
---    'Молитва при болезни Пример 1',
---    'Sample English text for illness prayer.',
---    'Text sample în română pentru rugăciune pentru boală.',
---    'Пример текста на русском для молитвы при болезни.',
---    'FOR_ILLNESS',
---    1,
---    3  -- Ajustează (ex: 3)
---);
---
---INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
---VALUES (
---    'Sample Illness Sub-Prayer 2',
---    'Rugăciune pentru Boală Exemplu 2',
---    'Молитва при болезни Пример 2',
---    'Another sample English text.',
---    'Alt text sample în română.',
---    'Еще один пример текста на русском.',
---    'FOR_ILLNESS',
---    2,
---    3
---);
---
----- Categorie GENERAL - Principal
---INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
---VALUES (
---    'General Prayers',
---    'Rugăciuni Generale',
---    'Общие молитвы',
---    '',
---    '',
---    '',
---    'GENERAL',
---    0,
---    NULL
---);
---
----- Sub-rugăciuni GENERAL (sample-uri simple)
---INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
---VALUES (
---    'Sample General Sub-Prayer 1',
---    'Rugăciune Generală Exemplu 1',
---    'Общая молитва Пример 1',
---    'Sample English text for general prayer.',
---    'Text sample în română pentru rugăciune generală.',
---    'Пример текста на русском для общей молитвы.',
---    'GENERAL',
---    1,
---    4  -- Ajustează (ex: 4)
---);
---
---INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
---VALUES (
---    'Sample General Sub-Prayer 2',
---    'Rugăciune Generală Exemplu 2',
---    'Общая молитва Пример 2',
---    'Another sample English text.',
---    'Alt text sample în română.',
---    'Еще один пример текста на русском.',
---    'GENERAL',
---    2,
---    4
---);
---
----- Note: După run inițial, verifică ID-uri în H2 Console și ajustează parent_id pentru sub-rugăciuni. După ajustare, re-run pentru a popula corect.
----- Completează cu rugăciuni reale.
+
+-- Insert sub-rugăciune pentru Seară: Tatăl Nostru (order_index = 3, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Our Father',
+    'Tatăl Nostru',
+    'Отче наш',
+    '',  -- Text engleză gol
+    'Tatăl nostru, Care ești în ceruri, sfin­țească-Se numele Tău,' || '\n' ||
+    'vie împărăția Ta, fie voia Ta, precum în cer așa și pe pă­mânt.' || '\n' ||
+    'Pâinea noastră cea de toate zilele, dă-ne-o nouă astăzi și ne iartă nouă greșelile noastre,' || '\n' ||
+    'precum și noi iertăm greșiților noș­tri. Și nu ne duce pe noi în ispită,' || '\n' ||
+    'ci ne izbă­vește de cel rău. Pentru rugăciunile Sfinților Părinților noștri,' || '\n' ||
+    'Doamne Iisuse Hristoase Fiul lui Dumnezeu miluiește-ne pe noi. Amin.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    3,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+
+-- Insert sub-rugăciune pentru Seară: Troparele de umilință (order_index = 4, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Tropare of Humility',
+    'Troparele de umilință',
+    'Тропари смирения',
+    '',  -- Text engleză gol
+    'Miluiește-ne pe noi, Doamne, mi­lu­iește-ne pe noi, că, nepricepându-ne de nici un răspuns, această rugă­ciune a­du­cem Ție, ca unui Stăpân, noi păcă­toșii robii Tăi; miluiește-ne pe noi.' || '\n\n' ||
+    'Slavă...,' || '\n' ||
+    'Doamne, miluiește-ne pe noi, că întru Tine am nădăjduit; nu Te mânia pe noi foarte, nici pomeni fărăde­legile noastre,' || '\n' ||
+    'ci caută și acum ca un milos­tiv și ne izbăvește pe noi de vrăj­mașii noștri, că Tu ești Dumne­zeul nostru și noi suntem poporul Tău,' || '\n' ||
+    'toți lucrul mâinilor Tale și numele Tău chemăm.' || '\n\n' ||
+    'Și acum...,' || '\n' ||
+    'Ușa mi­lostivirii deschide-o nouă, bi­necu­vân­tată Născătoare de Dum­ne­zeu, ca să nu pierim cei ce nădăj­duim întru tine,' || '\n' ||
+    'ci să ne mântuim prin tine din nevoi, că tu ești mân­tuirea neamului creștinesc.' || '\n\n' ||
+    'Doamne, miluiește (de 12 ori).',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    4,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Rugăciunea întâi a Sfântului Macarie cel Mare, către Dumnezeu Tatăl (order_index = 5, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'First Prayer of Saint Macarius the Great to God the Father',
+    'Rugăciunea întâi, a Sfântului Macarie cel Mare, către Dumnezeu Tatăl',
+    'Первая молитва Святого Макария Великого к Богу Отцу',
+    '',  -- Text engleză gol
+    'Dumnezeule cel veșnic și Împărate a toată făptura, Cel ce m-ai învred­ni­cit a ajunge până în acest ceas,' || '\n' ||
+    'iartă-mi păca­tele ce am făcut în a­ceastă zi, cu fapta, cu cuvântul și cu gândul;' || '\n' ||
+    'și cu­ră­țește, Doam­­ne, sme­ritul meu suflet de toată în­tină­ciu­nea trupului și a su­fletului.' || '\n' ||
+    'Și-mi dă, Doamne, în aceas­tă noapte, a trece som­­­nul în pa­ce ca, scu­lându-mă din ticălosul meu așternut,' || '\n' ||
+    'bine să plac Prea­sfântului Tău nume în toate zi­lele vieții mele și să calc pe vrăjmașii cei ce se lup­tă cu mine,' || '\n' ||
+    'pe cei tru­pești și pe cei fără de trup.' || '\n' ||
+    'Și mă izbă­vește, Doamne, de gândurile cele deșarte, care mă în­ti­nează, și de pof­tele cele rele.' || '\n' ||
+    'Că a Ta este împă­răția, puterea și slava, a Ta­tălui și a Fiului și a Sfân­­­tului Duh,' || '\n' ||
+    'acum și pu­rurea și în vecii vecilor. Amin.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    5,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Rugăciunea a doua a Sfântului Antioh, către Domnul nostru Iisus Hristos (order_index = 6, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Second Prayer of Saint Antioh to Our Lord Jesus Christ',
+    'Rugăciunea a doua, a Sfântului Antioh, către Domnul nostru Iisus Hristos',
+    'Вторая молитва Святого Антиоха к Господу нашему Иисусу Христу',
+    '',  -- Text engleză gol
+    'Atotțiitorule, Cuvinte al Tatălui, În­suți fiind desăvârșit, Iisuse Hris­toase,' || '\n' ||
+    'pentru multă milostivirea Ta, nu Te dez­lipi de mine, robul Tău, ci odih­nește întru mine pururea,' || '\n' ||
+    'Iisuse, Cel ce ești Păstor bun al oilor Tale.' || '\n' ||
+    'Nu mă da is­pitei șarpelui, nici nu mă lăsa în pofta satanei, că sămânța stricăciunii este întru mine.' || '\n' ||
+    'Tu, Doam­­ne Dum­ne­zeul, Cel Căruia ne în­chi­­­năm, Îm­pă­rate Sfinte, Iisuse Hristoase,' || '\n' ||
+    'pă­zește-mă în timpul somnului cu lumina cea ne­întunecată, cu Duhul Tău cel Sfânt, cu Care ai sfințit pe ucenicii Tăi.' || '\n' ||
+    'Dă-mi, Doamne, și mie, nevrednicului robului Tău, mântuirea Ta în așternutul meu.' || '\n' ||
+    'Lu­­mi­nează mintea mea cu lumina în­țele­gerii Sfintei Tale Evanghelii,' || '\n' ||
+    'su­fletul meu cu dra­gos­tea Crucii Tale, inima mea cu curăția cuvintelor Tale,' || '\n' ||
+    'trupul meu cu pa­tima Ta cea nebi­ruită, cugetul meu cu smerenia Ta îl păzește' || '\n' ||
+    'și mă ri­dică la vre­me cuviincioasă spre a Ta slăvire,' || '\n' ||
+    'că prea­slăvit ești cu Cel fără de început al Tău Părinte și cu Prea­­sfântul Duh în veci. Amin.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    6,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Rugăciunea a treia către Sfântul Duh (order_index = 7, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Third Prayer to the Holy Spirit',
+    'Rugăciunea a treia, către Sfântul Duh',
+    'Третья молитва к Святому Духу',
+    '',  -- Text engleză gol
+    'Doamne, Împărate Ceresc, Mân­gâ­ie­­­to­rule, Duhule adevărate, milosti­vește-Te spre mine, păcătosul ro­bul Tău, și mă miluiește și-mi iartă mie, ne­vrednicu­lui,' || '\n' ||
+    'toate câte am greșit Ție astăzi ca un om, și nu numai ca un om, ci și mai rău decât necuvân­tătoarele,' || '\n' ||
+    'păcatele mele cele de voie și cele fără de voie, cele ști­ute și cele ne­știute, care sunt din tinerețe și din obiceiul cel rău' || '\n' ||
+    'și care sunt din voia cea slobodă și din lene; ori de m-am jurat cu numele Tău,' || '\n' ||
+    'ori de L-am hulit în gândul meu, sau pe cineva am ocărât, sau pe cineva am clevetit în mânia mea,' || '\n' ||
+    'sau am mâhnit, sau de ceva m-am mâniat, sau am min­țit, sau fără de vreme am dormit,' || '\n' ||
+    'sau vreun sărac a venit la mine și nu l-am so­cotit, sau pe fratele meu l-am mâh­nit,' || '\n' ||
+    'sau m-am sfădit, sau pe cineva am osândit, sau m-am mărit, sau m-am tru­fit,' || '\n' ||
+    'sau m-am mâniat, sau, stând la rugăciune, mintea mea s-a îngrijit de vicleniile acestei lumi,' || '\n' ||
+    'sau răzvră­tire am cugetat, sau prea m-am sătu­rat, sau m-am îmbătat, sau nebunește am râs,' || '\n' ||
+    'sau ceva rău am cugetat, sau frumusețe străină am văzut și cu dânsa mi-am rănit inima,' || '\n' ||
+    'sau ce nu se cu­vine am grăit, sau de păcatul fratelui meu am râs, iar pă­catele mele sunt ne­numărate,' || '\n' ||
+    'sau de ru­găciune nu m-am îngrijit, sau altceva rău am făcut și nu-mi aduc aminte;' || '\n' ||
+    'că acestea toate și mai mari decât acestea am făcut.' || '\n' ||
+    'Milu­iește-mă, Stăpâne și Făcătorul meu, pe mine leneșul și nevrednicul robul Tău,' || '\n' ||
+    'și mă ușurează, și mă slobozește și mă iartă, ca un bun și de oameni iubitor.' || '\n' ||
+    'Ca în pace să mă culc și să dorm eu, păcă­tosul și necuratul și ticălosul,' || '\n' ||
+    'și să mă închin și să cânt și să prea­slă­vesc prea­cinstitul Tău nu­me, împreună cu al Tatălui și cu al Unuia-Născut Fi­ului Lui,' || '\n' ||
+    'acum și pururea și în vecii ve­cilor. Amin.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    7,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Rugăciunea a patra (order_index = 8, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Fourth Prayer',
+    'Rugăciunea a patra',
+    'Четвертая молитва',
+    '',  -- Text engleză gol
+    'Doamne, Dumnezeul nostru, orice am greșit în această zi cu cuvântul, cu fapta, și cu gândul,' || '\n' ||
+    'ca un bun și iubi­tor de oa­meni, iartă-mi.' || '\n' ||
+    'Somn cu pace și fără mâhnire dăruiește-mi.' || '\n' ||
+    'Pe îngerul Tău cel apără­tor trimite-l să mă aco­pere și să mă pă­zească de tot răul.' || '\n' ||
+    'Că Tu ești păzitorul su­fle­telor și al tru­purilor noastre și Ție slavă înăl­țăm,' || '\n' ||
+    'Ta­tălui și Fiului și Sfân­­tului Duh, acum și pururea și în vecii vecilor.Amin.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    8,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Rugăciunea a cincea (order_index = 9, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Fifth Prayer',
+    'Rugăciunea a cincea',
+    'Пятая молитва',
+    '',  -- Text engleză gol
+    'Doamne, Dumnezeul nostru, în Care credem și al Cărui nume mai mult decât tot numele Îl chemăm,' || '\n' ||
+    'dă-ne no­uă ier­tare sufletului și tru­pu­lui, celor ce mer­gem spre somn;' || '\n' ||
+    'pă­zeș­te-ne de toa­tă nălu­cirea și, fără întunecată dulceață, potolește pornirea pofte­lor,' || '\n' ||
+    'stinge a­prin­derea zbur­dării trupești și ne dă în curăție a viețui cu lu­cru­rile și cu­vin­tele,' || '\n' ||
+    'ca, dobândind viață cu fapte bu­ne, să nu cădem din bi­nele Tău cel fă­gă­duit,' || '\n' ||
+    'că binecuvântat ești în veci. Amin.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    9,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Rugăciunea a șasea către Sfânta Născătoare de Dumnezeu (order_index = 10, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Sixth Prayer to the Theotokos',
+    'Rugăciunea a șasea, către Sfânta Născătoare de Dumnezeu',
+    'Шестая молитва к Святой Богородице',
+    '',  -- Text engleză gol
+    'Preacurată și binecuvântată de Dum­­ne­­zeu Născătoare, Marie, Maica cea bună a Bu­nului Împărat,' || '\n' ||
+    'varsă mila Fiului Tău și Dum­nezeului nostru spre pătimașul meu suflet și,' || '\n' ||
+    'cu ru­gă­ciunile tale, mă îndrep­tează spre fapte bu­ne, ca cealaltă vreme a vieții mele fără de prihană să o trec' || '\n' ||
+    'și pen­tru tine raiul să dobândesc, Fecioa­ră de Dum­nezeu Năs­­cătoare,' || '\n' ||
+    'care ești una cu­rată și binecuvântată.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    10,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Rugăciunea a șaptea către Sfântul Înger Păzitor (order_index = 11, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Seventh Prayer to the Guardian Angel',
+    'Rugăciunea a șaptea, către sfântul înger, păzitor al vieții noastre',
+    'Седьмая молитва к святому ангелу-хранителю нашей жизни',
+    '',  -- Text engleză gol
+    'Îngerule al lui Hristos, păzitorul meu cel sfânt și acoperitorul sufle­tului și al tru­pului meu,' || '\n' ||
+    'iartă-mi toate câte am gre­­șit în ziua de astăzi, și de toată vi­clenia vrăjma­șului meu celui potri­v­nic mă izbăvește,' || '\n' ||
+    'ca să nu mânii cu niciun păcat pe Dumne­zeul meu; și te roagă pentru mine, păcă­tosul și ne­vred­­nicul rob,' || '\n' ||
+    'ca să mă arăți vred­nic bunătății și milei Preasfintei Trei­mi și Mai­cii Dom­­nului meu Iisus Hristos și tu­turor sfin­ților. Amin.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    11,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Condacul Născătoarei de Dumnezeu (order_index = 12, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Kontakion of the Theotokos',
+    'Condacul Născătoarei de Dumnezeu',
+    'Кондак Богородице',
+    '',  -- Text engleză gol
+    'Apărătoare Doamnă, pentru bi­ru­­­in­ță mul­țumiri, izbăvindu-ne din ne­­voi, adu­cem ție, Născătoare de Dum­­nezeu, noi, robii tăi.' || '\n' ||
+    'Ci, ca aceea ce ai stă­pânire nebi­ruită, izbăvește-ne din toa­te nevo­ile, ca să strigăm ție: Bucură-te, Mi­reasă, pururea fecioară.' || '\n\n' ||
+    'Fecioară, care ești pururea slă­vită, de Dum­nezeu Născătoare, Marie, Maica lui Hristos, Dumnezeul nos­tru,' || '\n' ||
+    'pri­meș­te ru­gă­ciunile noastre și le du Fiului tău și Dumnezeului nostru,' || '\n' ||
+    'ca să mântuiască și să lumineze, pentru tine, su­fletele noastre.' || '\n\n' ||
+    'Toată nădejdea mea spre tine o pun, Maica lui Dumnezeu, păzește-mă sub a­co­perământul tău.' || '\n\n' ||
+    'De Dumnezeu Născătoare Fe­cioa­ră, nu mă trece cu vederea pe mine, păcă­tosul, cel ce am nevoie de ajutorul tău și de folosința ta,' || '\n' ||
+    'că spre tine nă­dăj­duiește su­fletul meu, și mă miluiește.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    12,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+
+-- Insert sub-rugăciune pentru Seară: Rugăciunea Sfântului Ioanichie (order_index = 13, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Prayer of Saint Ioanichie',
+    'Rugăciunea Sfântului Ioanichie',
+    'Молитва Святого Иоаникия',
+    '',  -- Text engleză gol
+    'Nădejdea mea este Tatăl, scă­pa­rea mea este Fiul, acoperământul meu este Duhul Sfânt,' || '\n' ||
+    'Treime Sfântă, sla­vă Ție.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    13,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Ultima rugăciune de seară (order_index = 14, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Final Evening Prayer',
+    'Rugaciune catre Maica Domnului',
+    'Последняя вечерняя молитва',
+    '',  -- Text engleză gol
+    'Apoi:' || '\n\n' ||
+    'Cuvine-se cu adevărat să te feri­cim, Născătoare de Dumnezeu, cea puru­rea fe­ricită și prea nevinovată și Maica Dumne­zeului nostru.' || '\n' ||
+    'Ceea ce ești mai cinstită decât heruvimii și mai mărită fără de ase­mănare decât sera­fimii,' || '\n' ||
+    'ca­re fără stri­că­ciune pe Dum­nezeu Cu­vântul ai născut,' || '\n' ||
+    'pe tine, cea cu ade­vărat Năs­cătoare de Dum­nezeu, te mărim.' || '\n\n' ||
+    'Doamne, Iisuse Hristoase, Fiul lui Dumnezeu,' || '\n' ||
+    'pentru rugăciunile Preacu­ratei Maicii Tale, ale cuvio­șilor părin­ților noștri și ale tuturor sfinților, mântuiește-mă pe mine, păcătosul.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    14,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Rugăciunea Sfântului Ioan Damaschin (order_index = 15, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Prayer of Saint John Damascene',
+    'Rugăciunea Sfântului Ioan Damaschin',
+    'Молитва Святого Иоанна Дамаскина',
+    '',  -- Text engleză gol
+    'Stăpâne, Iubitorule de oameni, au doa­ră nu-mi va fi mie acest pat groa­pă?' || '\n' ||
+    'Sau încă vei mai lumina cu ziua tică­losul meu suflet?' || '\n' ||
+    'Iată, groapa îmi zace înainte și iată, moartea îmi stă înainte.' || '\n' ||
+    'De judecata Ta, Doamne, mă tem, și de chinul cel fără de sfâr­șit; iar a face rău nu mai contenesc.' || '\n' ||
+    'Pe Tine, Domnul Dumnezeul meu, puru­rea Te mânii și pe Preacurata Maica Ta' || '\n' ||
+    'și pe toate puterile cerești și pe sfântul înger, pă­zitorul meu.' || '\n' ||
+    'Și știu, Doamne, că nu sunt vrednic de iubi­rea Ta de oameni, ci vrednic sunt de toată osânda și chi­nul.' || '\n' ||
+    'Ci, rogu-Te, Doamne, mântu­iește-mă du­pă mul­ți­mea bunătății Tale,' || '\n' ||
+    'că, de vei mân­tui pe cel drept, nu-i lucru mare, iar de vei milui pe cel curat, nu-i nicio mi­nu­ne,' || '\n' ||
+    'că sunt vrednici de mila Ta, ci spre mine, păcătosul, să faci mi­nuni cu mila Ta;' || '\n' ||
+    'întru aceasta să arăți iu­birea Ta de oa­meni, ca să nu bi­ru­iască rău­tatea mea bu­nătatea și milos­ti­virea Ta cea veșnică,' || '\n' ||
+    'ci, precum vo­iești, toc­­mește pentru mine lucrul.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    15,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Rugăciunea Sfântului Ioan Damaschin extinsă (order_index = 16, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Extended Prayer of Saint John Damascene',
+    'Rugăciunea Sfântului Ioan Damaschin: (aceasta să o zici arătând spre patul tău)',
+    'Расширенная молитва Святого Иоанна Дамаскина: (произнеси это, указывая на свою постель)',
+    '',  -- Text engleză gol
+    'Apoi, cu închinăciune până la pământ, zi:' || '\n\n' ||
+    'Mă închin Ție, Preasfântă Treime, Care ești o Ființă de viață făcătoare și nedes­părțită: Părinte și Fiule și Du­­hule Sfinte;' || '\n' ||
+    'cred întru Tine și Te măr­turi­sesc și Te slăvesc, Îți mulțumesc și Te laud, Te cinstesc, Te preaînalț și Te rog: miluiește-mă pe mine, ne­vredni­cul robul Tău, pentru nu­mele Tău (de trei ori).' || '\n\n' ||
+    'Mă închin ție, Preasfântă Născă­toa­re de Dumnezeu, care ai arătat nouă lu­mi­na cea adevărată cu naș­terea ta,' || '\n' ||
+    'îm­pă­răteasa cerului și a pământului, nă­dej­dea celor fără de nădejde, aju­tă­toa­rea nepu­­tincio­șilor și împăcarea cu Dum­­nezeu a tuturor păcătoșilor.' || '\n' ||
+    'Tu mă aco­peră și mă apă­ră de toate ne­voile și împresurările sufletești și tru­pești.' || '\n' ||
+    'Și te rog să-mi fii folositoare cu prea­pu­­ter­nicele tale ru­găciuni (o închinăciune).' || '\n\n' ||
+    'Preasfântă Stăpână de Dumnezeu Năs­­­­cătoare, primește această puțină ru­­gă­ciu­ne și o du Fiului tău și Dum­ne­zeului nostru,' || '\n' ||
+    'ca să mântuiască și să lumi­neze, pen­tru tine, sufletele noas­tre (o închină­ciune).' || '\n\n' ||
+    'Toate puterile cerești: Scaunele, Dom­­nii­le, Începătoriile, Stăpâniile, Pute­rile, He­ruvimii, Serafimii, Ar­hanghe­lii și În­ge­rii,' || '\n' ||
+    'ru­gați-vă lui Dum­nezeu pentru mine, păcă­tosul (o închinăciune).' || '\n\n' ||
+    'Sfinte și mare Proorocule Ioane, Îna­inte­mergătorule și Botezătorule al Dom­­nu­lui, cel ce ai pătimit pentru Hristos și ai luat îndrăzneală către Stăpânul,' || '\n' ||
+    'roagă-te pentru mine, pă­că­tosul, ca să mă mântuiesc cu rugă­­­ciunile tale (o închinăciune).' || '\n\n' ||
+    'Sfinților ai lui Dumnezeu: apos­to­­­lilor, proorocilor, mucenicilor, arhi­e­rei­lor, postitorilor, temătorilor de Dum­­ne­zeu, drepți­lor, locuitorilor în pustie,' || '\n' ||
+    'călugărilor, patriarhilor și toți sfinții care ați pătimit pen­tru Hristos și ați câștigat îndrăzneală către Stăpânul,' || '\n' ||
+    'rugați-vă pentru mine, pă­că­tosul, ca să mă mântuiesc cu rugăciunile voastre (o închinăciune).' || '\n\n' ||
+    'Sfinte Ioane Gură de Aur, cu Va­sile cel Mare, cu Grigorie, de Dum­nezeu cu­vântătorul, și cu făcătorul de minuni Ni­colae,' || '\n' ||
+    'cu toți sfinții în­cepători ai pre­oției, ajutați-mi și mi­luiți-mă cu rugă­ciunile și ajutorul vostru (o închinăciune).' || '\n\n' ||
+    'Toate sfintele femei: mironosițe, mu­­­­ce­­nițe, temătoare de Dumnezeu și fecioa­re,' || '\n' ||
+    'care ați slujit Mân­tui­to­rului Hristos cum se cuvine, ru­gați pe Dum­­nezeu pentru mine, păcă­tosul (o în­chi­năciune).' || '\n\n' ||
+    'Cea nebiruită și dumnezeiască putere a cinstitei și de viață făcătoarei Cruci a Dom­nu­lui,' || '\n' ||
+    'nu mă lăsa pe mine pă­cătosul, ci mă apără de toata ispita cea trupească și sufletească (o închinăciune).' || '\n\n' ||
+    'Preacurată Stăpână, de Dum­ne­zeu Năs­­­­că­toare, nădejdea tuturor crești­ni­lor,' || '\n' ||
+    'pentru că altă îndrăzneală și nă­dejde nu am, fără numai pe tine, ceea ce ești cu totul nevinovată,' || '\n' ||
+    'Stă­pâna mea și Doam­nă, de Dumne­zeu Născătoare, Mai­ca lui Hristos Dum­nezeului meu,' || '\n' ||
+    'pentru aceea mă rog: mi­luiește-mă și mă izbăvește de toate rău­tățile mele' || '\n' ||
+    'și roagă pe Milostivul tău Fiu și Dum­nezeul meu ca să mi­luiască tică­losul meu suflet și să mă izbăvească de veșnicele chinuri' || '\n' ||
+    'și să mă învredni­cească împărăției Sale (o închinăciune).' || '\n\n' ||
+    'Sfinte îngere, păzitorul meu, aco­peră-mă cu aripile bunătății tale' || '\n' ||
+    'și iz­gonește de la mine toată lucrarea cea rea a diavolului și roagă pe Dum­nezeu pentru mine, păcătosul.' || '\n\n' ||
+    'Și apoi, vrând să te așezi pe așternut, zi acestea:' || '\n\n' ||
+    'Luminează ochii mei, Hristoase Dum­­­­ne­zeule, ca nu cândva să adorm întru moar­te,' || '\n' ||
+    'ca nu cândva să zică vrăj­mașul meu: întăritu-m-am asu­pra lui.' || '\n\n' ||
+    'Slavă...,' || '\n' ||
+    'Sprijinitor sufletului meu fii, Dum­­­ne­zeule, că umblu prin mijlocul a multe curse;' || '\n' ||
+    'izbăvește-mă de dânsele și mă mân­­tuiește, Bunule, ca un iubitor de oameni.' || '\n\n' ||
+    'Și acum..., a Născătoarei de Dumnezeu:' || '\n' ||
+    'Preaslăvită Maică a lui Dum­ne­zeu, care ești mai sfântă decât sfinții în­geri,' || '\n' ||
+    'neîn­cetat te cântăm cu inima și cu gura, mărturisind că tu ești de Dum­­­nezeu Năs­cătoare,' || '\n' ||
+    'căci cu ade­vă­­rat ne-ai născut nouă pe Dumnezeu în­tru­pat și te rogi ne­încetat pentru su­fletele noastre.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    16,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
+-- Insert sub-rugăciune pentru Seară: Rugăciunea cinstitei Cruci (order_index = 17, parent_id = 2 pentru categoria EVENING)
+
+INSERT INTO core_schema.prayers (title_en, title_ro, title_ru, text_en, text_ro, text_ru, category, order_index, parent_id)
+VALUES (
+    'Prayer of the Holy Cross',
+    'Rugăciunea cinstitei Cruci',
+    'Молитва святого Креста',
+    '',  -- Text engleză gol
+    'Apoi, sărutând Sfânta Cruce (sau o icoană), faci semnul acesteia peste locul unde te vei odihni, zicând:' || '\n\n' ||
+    'Rugăciunea cinstitei Cruci:' || '\n\n' ||
+    'Să învie Dumnezeu și să se risipească vrăjmașii Lui și să fugă de la fața Lui cei ce-L urăsc pe Dânsul.' || '\n' ||
+    'Să piară cum piere fumul; cum se topește ceara de fața focului, așa să piară dia­volii de la fața celor ce iu­besc pe Dum­­nezeu' || '\n' ||
+    'și se însemnează cu semnul Crucii și zic cu veselie: Bucură-te, prea­cins­tită și de viață făcătoare Cru­cea Dom­nului,' || '\n' ||
+    'care alungi pe diavoli cu puterea Celui ce S-a răstignit pe tine, a Dom­nului nostru Iisus Hristos,' || '\n' ||
+    'și S-a pogorât la iad și a călcat puterea diavolului și te-a dăruit nouă pe tine, cinstită Crucea Sa,' || '\n' ||
+    'spre alungarea a tot piz­mașul.' || '\n' ||
+    'O, preacinstită și de via­ță fă­că­toare Crucea Dom­nului, ajută-mi cu Sfânta Doamnă Fe­cioa­ră, Năs­că­toa­re de Dumnezeu,' || '\n' ||
+    'și cu toți sfinții în veci. Amin.' || '\n' ||
+    'Apoi, făcându-ți semnul crucii și cu ru­gă­ciunea în minte adormind, gândește-te la ziua judecății, cum vei sta înaintea lui Dumnezeu.',  -- Text română complet
+    '',  -- Text rusă gol
+    'EVENING',
+    17,
+    2  -- ID-ul categoriei principale "Rugăciuni de Seară", ajustează dacă necesar
+);
