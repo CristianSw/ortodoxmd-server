@@ -21,16 +21,16 @@ Dependințe: Java 17, Maven, Docker (opțional).
 
 ## Checklist Features (Server-Side)
 - [x] **Core-Service: Calendar Ortodox** - API pentru listă sărbători, fetch după dată (JSON).
-- [ ] **Core-Service: Rugăciuni Ortodoxe** - API pentru categorii și text rugăciuni.
-- [ ] **Core-Service: Biblie** - API pentru capitole/versete structurate (Vechi/Nou Testament).
+- [X] **Core-Service: Rugăciuni Ortodoxe** - API pentru categorii și text rugăciuni.
+- [X] **Core-Service: Biblie** - API pentru capitole/versete structurate (Vechi/Nou Testament).
 - [ ] **Core-Service: Vieți Sfinți** - API pentru biografii și imagini metadata.
 - [ ] **Core-Service: Informații Icoane** - API pentru descrieri și imagini.
 - [ ] **Core-Service: Slujbe Bisericești** - API pentru detalii slujbe.
 - [ ] **Core-Service: Hartă Interactivă** - API pentru locații lăcașuri (JSON cu coordonate).
-- [ ] **Media-Service: Radio Online** - API pentru streaming posturi radio (URL-uri).
+- [X] **Media-Service: Radio Online** - API pentru streaming posturi radio (URL-uri).(Implementat complet pe partea Android)
 - [ ] **Media-Service: Cărți Audio/Electronice** - API pentru streaming/download audio/text, metadata.
 - [ ] **Comun: Integrări Inter-Servicii** - Calls via Feign între core și media.
-- [ ] **Comun: Suport Offline (Download)** - Endpoints pentru bulk download.
+- [X] **Comun: Suport Offline (Download)** - Endpoints pentru bulk download.(partial implementat pe partea Android)
 - [ ] **Comun: Deploy Producție** - Configurații pentru Heroku/Render, HTTPS.
 - [ ] **Comun: Testing și CI** - JUnit tests, GitHub Actions pentru build.
 
