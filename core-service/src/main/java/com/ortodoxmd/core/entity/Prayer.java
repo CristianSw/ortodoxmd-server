@@ -1,9 +1,11 @@
 package com.ortodoxmd.core.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,6 @@ import java.util.Objects;
 @Table(name = "prayers", schema = "core_schema")
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 public class Prayer {
     @Id
@@ -77,5 +78,20 @@ public class Prayer {
         public String getDisplayName() {
             return displayName;
         }
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "titleEn = " + titleEn + ", " +
+                "titleRo = " + titleRo + ", " +
+                "titleRu = " + titleRu + ", " +
+                "textEn = " + textEn + ", " +
+                "textRo = " + textRo + ", " +
+                "textRu = " + textRu + ", " +
+                "category = " + category + ", " +
+                "orderIndex = " + orderIndex + ", " +
+                "parent = " + parent + ")";
     }
 }

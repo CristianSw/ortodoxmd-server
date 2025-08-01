@@ -11,10 +11,10 @@ import com.ortodoxmd.core.repository.BibleVerseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BibleService {
@@ -49,44 +49,37 @@ public class BibleService {
     public Long getChapterId(Long bookId, int chapterNumber) {
         return chapterRepository.findByBookIdAndChapterNumber(bookId, chapterNumber)
                 .map(BibleChapter::getId)
-                .orElse(null);  // Return null if not found
+                .orElse(null);
     }
 
     @Cacheable("bibleAll")
+    @Transactional(readOnly = true) // Bună practică pentru operațiuni complexe de citire
     public List<BibleBookFullDto> getEntireBible() {
-        List<BibleBookFullDto> bible = new ArrayList<>();
+        // FIX: Folosim noua metodă optimizată pentru a încărca totul eficient
+        List<BibleBook> books = bookRepository.findAllWithChaptersAndVerses();
 
-        List<BibleBook> books = bookRepository.findAll();
-        for (BibleBook book : books) {
-            BibleBookFullDto bookDto = new BibleBookFullDto(
+        // Maparea la DTO-uri rămâne, dar acum operează pe date deja încărcate în memorie.
+        return books.stream().map(book -> {
+            List<BibleChapterFullDto> chapterDtos = book.getChapters().stream().map(chapter -> {
+                // Setăm câmpurile tranziente direct pe versete
+                chapter.getVerses().forEach(verse -> {
+                    verse.setBookId(book.getId());
+                    verse.setChapterNumber(chapter.getChapterNumber());
+                });
+                return new BibleChapterFullDto(
+                        chapter.getChapterNumber(),
+                        chapter.getVerses()
+                );
+            }).collect(Collectors.toList());
+
+            return new BibleBookFullDto(
                     book.getId(),
                     book.getNameRo(),
                     book.getNameEn(),
                     book.getNameRu(),
                     book.getTestament().getId(),
-                    new ArrayList<>()
+                    chapterDtos
             );
-
-            List<BibleChapter> chapters = chapterRepository.findByBookId(book.getId());
-            for (BibleChapter chapter : chapters) {
-                BibleChapterFullDto chapterDto = new BibleChapterFullDto(
-                        chapter.getChapterNumber(),
-                        new ArrayList<>()
-                );
-
-                List<BibleVerse> verses = verseRepository.findByChapterId(chapter.getId());
-                for (BibleVerse verse : verses) {
-                    verse.setBookId(book.getId());  // Set bookId
-                    verse.setChapterNumber(chapter.getChapterNumber());  // Set chapterNumber
-                    chapterDto.getVerses().add(verse);
-                }
-
-                bookDto.getChapters().add(chapterDto);
-            }
-
-            bible.add(bookDto);
-        }
-
-        return bible;
+        }).collect(Collectors.toList());
     }
 }
