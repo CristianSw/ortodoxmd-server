@@ -30,7 +30,7 @@ Dependințe: Java 17, Maven, Docker (opțional).
 - [X] **Media-Service: Radio Online** - API pentru streaming posturi radio (URL-uri).(Implementat complet pe partea Android)
 - [ ] **Media-Service: Cărți Audio/Electronice** - API pentru streaming/download audio/text, metadata.
 - [ ] **Comun: Integrări Inter-Servicii** - Calls via Feign între core și media.
-- [X] **Comun: Suport Offline (Download)** - Endpoints pentru bulk download.(partial implementat pe partea Android)
+- [X] **Comun: Suport Offline (Download)** - Endpoints pentru bulk download.(complet pe partea de server)(partial implementat pe partea Android)
 - [ ] **Comun: Deploy Producție** - Configurații pentru Heroku/Render, HTTPS.
 - [ ] **Comun: Testing și CI** - JUnit tests, GitHub Actions pentru build.
 
