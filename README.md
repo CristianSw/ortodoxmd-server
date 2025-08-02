@@ -23,13 +23,13 @@ Dependințe: Java 17, Maven, Docker (opțional).
 - [x] **Core-Service: Calendar Ortodox** - API pentru listă sărbători, fetch după dată (JSON).
 - [X] **Core-Service: Rugăciuni Ortodoxe** - API pentru categorii și text rugăciuni.
 - [X] **Core-Service: Biblie** - API pentru capitole/versete structurate (Vechi/Nou Testament).
-- [ ] **Core-Service: Vieți Sfinți** - API pentru biografii și imagini metadata.
-- [ ] **Core-Service: Informații Icoane** - API pentru descrieri și imagini.
-- [ ] **Core-Service: Slujbe Bisericești** - API pentru detalii slujbe.
-- [ ] **Core-Service: Hartă Interactivă** - API pentru locații lăcașuri (JSON cu coordonate).
+- [X] **Core-Service: Vieți Sfinți** - API pentru biografii și imagini metadata.
+- [X] **Core-Service: Informații Icoane** - API pentru descrieri și imagini.
+- [X] **Core-Service: Slujbe Bisericești** - API pentru detalii slujbe.
+- [X] **Core-Service: Hartă Interactivă** - API pentru locații lăcașuri (JSON cu coordonate).
 - [X] **Media-Service: Radio Online** - API pentru streaming posturi radio (URL-uri).(Implementat complet pe partea Android)
-- [ ] **Media-Service: Cărți Audio/Electronice** - API pentru streaming/download audio/text, metadata.
-- [ ] **Comun: Integrări Inter-Servicii** - Calls via Feign între core și media.
+- [X] **Media-Service: Cărți Audio/Electronice** - API pentru streaming/download audio/text, metadata.
+- [X] **Comun: Integrări Inter-Servicii** - Calls via Feign între core și media.
 - [X] **Comun: Suport Offline (Download)** - Endpoints pentru bulk download.(complet pe partea de server)(partial implementat pe partea Android)
 - [ ] **Comun: Deploy Producție** - Configurații pentru Heroku/Render, HTTPS.
 - [ ] **Comun: Testing și CI** - JUnit tests, GitHub Actions pentru build.
