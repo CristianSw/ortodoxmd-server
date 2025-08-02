@@ -1,9 +1,9 @@
 package com.ortodoxmd.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Objects;
 
@@ -14,17 +14,32 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 public class Saint {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nameAndDescriptionEn;
     private String nameAndDescriptionRo;
+    private String nameAndDescriptionEn;
     private String nameAndDescriptionRu;
 
-    @ManyToOne
+    @Column(columnDefinition = "TEXT")
+    private String lifeDescriptionRo;
+
+    @Column(columnDefinition = "TEXT")
+    private String lifeDescriptionEn;
+
+    @Column(columnDefinition = "TEXT")
+    private String lifeDescriptionRu;
+
+    // FIX: Stocăm ID-ul icoanei din media-service, nu calea.
+    private Long iconId;
+
+    // FIX: Relația ManyToOne corectă către CalendarDay
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "calendar_day_date")
-    @JsonIgnore  // Break circular reference during serialization
+    @JsonIgnore // Esențial pentru a preveni buclele de serializare
+    @ToString.Exclude
     private CalendarDay calendarDay;
 
     @Override

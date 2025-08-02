@@ -1,8 +1,14 @@
 package com.ortodoxmd.core.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+@Setter
+@Getter
 public class BibleBookFullDto {
+    // Getters and setters...
     private Long id;
     private String nameRo;
     private String nameEn;
@@ -20,52 +26,4 @@ public class BibleBookFullDto {
         this.chapters = chapters;
     }
 
-    // Getters and setters...
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNameRo() {
-        return nameRo;
-    }
-
-    public void setNameRo(String nameRo) {
-        this.nameRo = nameRo;
-    }
-
-    public String getNameEn() {
-        return nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
-    }
-
-    public String getNameRu() {
-        return nameRu;
-    }
-
-    public void setNameRu(String nameRu) {
-        this.nameRu = nameRu;
-    }
-
-    public Long getTestamentId() {
-        return testamentId;
-    }
-
-    public void setTestamentId(Long testamentId) {
-        this.testamentId = testamentId;
-    }
-
-    public List<BibleChapterFullDto> getChapters() {
-        return chapters;
-    }
-
-    public void setChapters(List<BibleChapterFullDto> chapters) {
-        this.chapters = chapters;
-    }
 }
