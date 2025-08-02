@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SaintRepository extends JpaRepository<Saint, Long> {
+    // Metoda findSaintsWithLifeDescription() a fost eliminată.
+    // Logica pentru viețile sfinților a fost mutată în SaintLifeRepository.
 }

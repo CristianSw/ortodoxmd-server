@@ -1,38 +1,40 @@
 package com.ortodoxmd.core.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
-
 import java.util.Objects;
 
+/**
+ * Entitate dedicată pentru a stoca viața unică a unui sfânt,
+ * decuplată de calendar.
+ */
 @Entity
-@Table(name = "saints", schema = "core_schema")
+@Table(name = "saint_lives", schema = "core_schema")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Saint {
+public class SaintLife {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nameAndDescriptionRo;
-    private String nameAndDescriptionEn;
-    private String nameAndDescriptionRu;
+    private String nameRo;
+    private String nameEn;
+    private String nameRu;
 
-    // Câmpurile lifeDescription au fost eliminate.
-    // Această informație este acum gestionată de entitatea SaintLife.
+    @Column(columnDefinition = "TEXT")
+    private String lifeDescriptionRo;
+
+    @Column(columnDefinition = "TEXT")
+    private String lifeDescriptionEn;
+
+    @Column(columnDefinition = "TEXT")
+    private String lifeDescriptionRu;
 
     private Long iconId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "calendar_day_date")
-    @JsonIgnore
-    @ToString.Exclude
-    private CalendarDay calendarDay;
 
     @Override
     public final boolean equals(Object o) {
@@ -41,8 +43,8 @@ public class Saint {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Saint saint = (Saint) o;
-        return getId() != null && Objects.equals(getId(), saint.getId());
+        SaintLife saintLife = (SaintLife) o;
+        return getId() != null && Objects.equals(getId(), saintLife.getId());
     }
 
     @Override

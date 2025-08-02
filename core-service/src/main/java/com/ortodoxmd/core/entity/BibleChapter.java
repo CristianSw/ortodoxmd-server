@@ -1,13 +1,13 @@
 package com.ortodoxmd.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "bible_chapters", schema = "core_schema")
@@ -16,6 +16,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 public class BibleChapter {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,10 +27,11 @@ public class BibleChapter {
     @JoinColumn(name = "book_id")
     private BibleBook book;
 
+    // FIX: Schimbat din List în Set pentru a permite fetch-uri multiple
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
     @ToString.Exclude
-    @JsonIgnore  // Fix: Ignoră verses pentru a evita nesting infinit la serializare
-    private List<BibleVerse> verses = new ArrayList<>();
+    @JsonIgnore
+    private Set<BibleVerse> verses = new HashSet<>();
 
     @Override
     public final boolean equals(Object o) {

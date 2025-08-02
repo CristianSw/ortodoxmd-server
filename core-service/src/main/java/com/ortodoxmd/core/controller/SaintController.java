@@ -17,8 +17,15 @@ public class SaintController {
     @Autowired
     private SaintService service;
 
+    /**
+     * Acest endpoint rămâne pentru a obține detaliile unui sfânt
+     * așa cum apare el într-o anumită zi din calendar.
+     */
     @GetMapping("/{id}/details")
     public Optional<Saint> getSaintDetails(@PathVariable Long id) {
         return service.getSaintDetails(id);
     }
+
+    // Endpoint-ul /with-life a fost eliminat.
+    // Folosiți noul endpoint /api/saint-lives pentru a obține lista unică de vieți.
 }
