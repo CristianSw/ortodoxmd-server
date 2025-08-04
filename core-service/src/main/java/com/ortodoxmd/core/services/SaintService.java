@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,4 +25,8 @@ public class SaintService {
         // Logica este acum mult mai simplă: doar găsește și returnează sfântul.
         return repository.findById(id);
     }
+//    @Cacheable("saintsWithLife")
+//    public List<Saint> getSaintsWithLifeDescription() {
+//        return repository.findSaintsWithLifeDescription();
+//    }
 }

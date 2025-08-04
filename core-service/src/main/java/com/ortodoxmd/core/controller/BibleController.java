@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/bible")
@@ -24,18 +24,19 @@ public class BibleController {
     }
 
     @GetMapping("/books/{bookId}/chapters")
-    public List<BibleChapter> getChapters(@PathVariable Long bookId) {
+    public Set<BibleChapter> getChapters(@PathVariable Long bookId) {
         return service.getChapters(bookId);
     }
 
     @GetMapping("/books/{bookId}/chapters/{chapterNumber}/verses")
-    public List<BibleVerse> getVerses(@PathVariable Long bookId, @PathVariable int chapterNumber) {
+    public Set<BibleVerse> getVerses(@PathVariable Long bookId, @PathVariable int chapterNumber) {
         Long chapterId = service.getChapterId(bookId, chapterNumber);
         if (chapterId == null) {
-            return List.of(); // Return empty list if chapter not found
+            return Set.of();
         }
         return service.getVerses(chapterId);
     }
+
     @GetMapping("/all")
     public List<BibleBookFullDto> getEntireBible() {
         return service.getEntireBible();

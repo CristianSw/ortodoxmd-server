@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,13 +38,15 @@ public class BibleService {
     }
 
     @Cacheable("bibleChapters")
-    public List<BibleChapter> getChapters(Long bookId) {
+    public Set<BibleChapter> getChapters(Long bookId) {
+        // Repository-ul returnează direct Set, deci nu mai este necesară conversia.
         return chapterRepository.findByBookId(bookId);
     }
 
     @Cacheable("bibleVerses")
-    public List<BibleVerse> getVerses(Long chapterId) {
-        return chapterId != null ? verseRepository.findByChapterId(chapterId) : List.of();
+    public Set<BibleVerse> getVerses(Long chapterId) {
+        // Repository-ul returnează direct Set, deci nu mai este necesară conversia.
+        return chapterId != null ? verseRepository.findByChapterId(chapterId) : Set.of();
     }
 
     public Long getChapterId(Long bookId, int chapterNumber) {
@@ -53,15 +56,12 @@ public class BibleService {
     }
 
     @Cacheable("bibleAll")
-    @Transactional(readOnly = true) // Bună practică pentru operațiuni complexe de citire
+    @Transactional(readOnly = true)
     public List<BibleBookFullDto> getEntireBible() {
-        // FIX: Folosim noua metodă optimizată pentru a încărca totul eficient
         List<BibleBook> books = bookRepository.findAllWithChaptersAndVerses();
 
-        // Maparea la DTO-uri rămâne, dar acum operează pe date deja încărcate în memorie.
         return books.stream().map(book -> {
-            List<BibleChapterFullDto> chapterDtos = book.getChapters().stream().map(chapter -> {
-                // Setăm câmpurile tranziente direct pe versete
+            Set<BibleChapterFullDto> chapterDtos = book.getChapters().stream().map(chapter -> {
                 chapter.getVerses().forEach(verse -> {
                     verse.setBookId(book.getId());
                     verse.setChapterNumber(chapter.getChapterNumber());
@@ -70,7 +70,7 @@ public class BibleService {
                         chapter.getChapterNumber(),
                         chapter.getVerses()
                 );
-            }).collect(Collectors.toList());
+            }).collect(Collectors.toSet());
 
             return new BibleBookFullDto(
                     book.getId(),
